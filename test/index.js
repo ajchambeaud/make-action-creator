@@ -10,4 +10,14 @@ describe('makeActionCreator', () => {
 
     expect(actionCreator).to.be.a('function');
   });
+
+  it('should return an action object when action creator is called', () => {
+    const actionPrefixType = 'my_action';
+    const actionCreator = makeActionCreator(actionPrefixType);
+
+    expect(actionCreator('foo')).to.deep.equal({
+      type: 'MY_ACTION',
+      payload: 'foo'
+    });
+  });
 });
