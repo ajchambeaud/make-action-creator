@@ -4,7 +4,7 @@
   "description": "Make action creators enhanced for async control flow.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-register --recursive",
+    "test": "mocha --compilers js:babel-core/register --recursive",
     "build": "webpack"
   },
   "keywords": [
