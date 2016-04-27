@@ -2,6 +2,7 @@
 
 import { expect } from 'chai';
 import makeActionCreator from '../src/index';
+import { begin, end, pendingTask } from 'react-redux-spinner';
 
 describe('makeActionCreator', () => {
   it('should return an action creator function', () => {
@@ -9,6 +10,29 @@ describe('makeActionCreator', () => {
     const actionCreator = makeActionCreator(actionPrefixType);
 
     expect(actionCreator).to.be.a('function');
+  });
+
+  it('should accept options.rrSpiner flag and when is present adds spinner data to actions start, success and failure', () => {
+    const actionPrefixType = 'my_action';
+    const actionCreator = makeActionCreator(actionPrefixType, { rrSpinner: true });
+
+    expect(actionCreator.start('foo')).to.deep.equal({
+      type: 'MY_ACTION_START',
+      payload: 'foo',
+      [pendingTask]: begin
+    });
+
+    expect(actionCreator.success('foo')).to.deep.equal({
+      type: 'MY_ACTION_SUCCESS',
+      payload: 'foo',
+      [pendingTask]: end
+    });
+
+    expect(actionCreator.failure('foo')).to.deep.equal({
+      type: 'MY_ACTION_FAILURE',
+      payload: 'foo',
+      [pendingTask]: end
+    });
   });
 
   describe('actionCreator', () => {
@@ -81,6 +105,44 @@ describe('makeActionCreator', () => {
       const actionCreator = makeActionCreator(actionPrefixType);
 
       expect(actionCreator.FAILURE).to.be.equal('MY_ACTION_FAILURE');
+    });
+
+    it('should allow to pass an object with aditional propertys to merge with action object', () => {
+      const actionPrefixType = 'my_action';
+      const actionCreator = makeActionCreator(actionPrefixType);
+
+      const aditionalFields = {
+        foo: 'bar',
+        another: 10
+      };
+
+      expect(actionCreator('foo', aditionalFields)).to.deep.equal({
+        type: 'MY_ACTION',
+        payload: 'foo',
+        foo: 'bar',
+        another: 10
+      });
+
+      expect(actionCreator.start('foo', aditionalFields)).to.deep.equal({
+        type: 'MY_ACTION_START',
+        payload: 'foo',
+        foo: 'bar',
+        another: 10
+      });
+
+      expect(actionCreator.success('foo', aditionalFields)).to.deep.equal({
+        type: 'MY_ACTION_SUCCESS',
+        payload: 'foo',
+        foo: 'bar',
+        another: 10
+      });
+
+      expect(actionCreator.failure('foo', aditionalFields)).to.deep.equal({
+        type: 'MY_ACTION_FAILURE',
+        payload: 'foo',
+        foo: 'bar',
+        another: 10
+      });
     });
   });
 });

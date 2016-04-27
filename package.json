@@ -4,7 +4,7 @@
   "description": "Make action creators enhanced for async control flow.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register --recursive",
+    "test": "webpack --config webpack.tests.config.js && mocha dist/test.js",
     "build": "webpack"
   },
   "keywords": [
@@ -35,7 +35,11 @@
     "babel-preset-stage-2": "^6.5.0",
     "chai": "^3.5.0",
     "mocha": "^2.4.5",
+    "proxyquire": "^1.7.4",
     "semistandard-loader": "0.0.3",
     "webpack": "^1.12.14"
+  },
+  "dependencies": {
+    "react-redux-spinner": "^0.4.0"
   }
 }
