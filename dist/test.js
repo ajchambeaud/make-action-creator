@@ -8319,6 +8319,7 @@
 	};
 
 	exports.default = makeActionCreator;
+	module.exports = exports['default'];
 
 /***/ },
 /* 42 */
