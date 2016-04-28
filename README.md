@@ -117,8 +117,8 @@ dispatch(deleteUser(userId));
 
 /*
 {
-	type: 'DELETE_USER',
-	payload: userId
+  type: 'DELETE_USER',
+  payload: userId
 }
 */
 ```
@@ -166,7 +166,7 @@ function myReducer(state = initialState, action) {
 
 ### Integrate with react-redux-spinner
 
-I kind a like this module: https://www.npmjs.com/package/react-redux-spinner.
+I kinda like this module: https://www.npmjs.com/package/react-redux-spinner.
 
 As async flow use to come with showing some loader in the page, if you are using this module and like the async related actions to include the flags to start and finish the react-redux-spinner, just add this to the actionCreator creation step:
 
@@ -182,15 +182,14 @@ By default you just pass one paremeter to the action creator and that will be th
 const myAction = makeActionCreator('my_action', { rrSpinner: true });
 
 myAction('foo', {
-	more: data
+  more: data
 })
 
 /*
 {
-	type: 'MY_ACTION',
-	payload: 'foo',
-	more: data
+  type: 'MY_ACTION',
+  payload: 'foo',
+  more: data
 }
 */
 ```
-
