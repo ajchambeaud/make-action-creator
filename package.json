@@ -1,11 +1,11 @@
 {
   "name": "make-action-creator",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Make action creators enhanced for async control flow.",
   "main": "dist/index.js",
   "scripts": {
     "test": "webpack --config webpack.tests.config.js && mocha dist/test.js",
-    "build": "webpack"
+    "build": "babel ./src/index.js --out-file ./dist/index.js"
   },
   "keywords": [
     "redux",
