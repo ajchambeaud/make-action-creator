@@ -26,7 +26,7 @@ var reducer = exports.reducer = function reducer() {
 
     return _extends({}, state, _defineProperty({}, base, {
       status: sub === 'START' ? 'pending' : sub === 'SUCCESS' ? 'success' : 'failure',
-      error: sub === 'FAILURE' ? action.payload.error : null
+      error: sub === 'FAILURE' ? action.payload.error.message : null
     }));
   }
   if (action.type === 'CLEAR_STATUS') {

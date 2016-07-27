@@ -53,7 +53,9 @@ describe('the reducer', () => {
     const action = {
       type: 'MY_ACTION_FAILURE',
       payload: {
-        error: 'this failed'
+        error: {
+          message: 'this failed'
+        }
       }
     };
 
@@ -72,7 +74,9 @@ describe('the reducer', () => {
       MY_ACTION: {
         status: 'failure',
         payload: {
-          error: 'this failed'
+          error: {
+            message: 'this failed'
+          }
         }
       }
     };
@@ -94,7 +98,9 @@ describe('the reducer', () => {
       MY_ACTION: {
         status: 'failure',
         payload: {
-          error: 'this failed'
+          error: {
+            message: 'this failed'
+          }
         }
       }
     };
