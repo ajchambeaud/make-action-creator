@@ -4,7 +4,7 @@
  * Then, make-action-creator selectors may access specific actions
  * statuses and error messages easily.
  */
-const reducer = (state = {}, action) => {
+export const reducer = (state = {}, action) => {
   if (isAsync(action.type)) {
     const { base, sub } = breakAction(action.type);
     return {
@@ -36,5 +36,3 @@ function breakAction (type) {
     sub: type.slice(type.lastIndexOf('_') + 1)
   };
 }
-
-export default reducer;

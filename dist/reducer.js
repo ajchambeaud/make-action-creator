@@ -14,7 +14,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
  * Then, make-action-creator selectors may access specific actions
  * statuses and error messages easily.
  */
-var reducer = function reducer() {
+var reducer = exports.reducer = function reducer() {
   var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
   var action = arguments[1];
 
@@ -47,6 +47,3 @@ function breakAction(type) {
     sub: type.slice(type.lastIndexOf('_') + 1)
   };
 }
-
-exports.default = reducer;
-module.exports = exports['default'];

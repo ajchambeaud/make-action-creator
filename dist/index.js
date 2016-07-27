@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _reactReduxSpinner = require('react-redux-spinner');
 
-var DEFAULT_STATE_KEY = 'async';
+var STATE_KEY = 'async';
 var DEFAULT_STATUS_VALUE = 'init';
 var DEFAULT_ERROR_VALUE = null;
 
@@ -44,26 +44,22 @@ var makeActionCreator = function makeActionCreator(typePrefix) {
     action[type] = typePrefix + '_' + type;
   });
 
-  action.getError = getErrorSelector(action.type, options.stateKey);
-  action.getStatus = getStatusSelector(action.type, options.stateKey);
+  action.getError = getErrorSelector(action.type);
+  action.getStatus = getStatusSelector(action.type);
   action.clearStatus = { type: 'CLEAR_STATUS', actionType: action.type };
 
   return action;
 };
 
 function getStatusSelector(actionType) {
-  var stateKey = arguments.length <= 1 || arguments[1] === undefined ? DEFAULT_STATE_KEY : arguments[1];
-
   return function (state) {
-    return state[stateKey][actionType] ? state[stateKey][actionType].status : DEFAULT_STATUS_VALUE;
+    return state[STATE_KEY][actionType] ? state[STATE_KEY][actionType].status : DEFAULT_STATUS_VALUE;
   };
 }
 
 function getErrorSelector(actionType) {
-  var stateKey = arguments.length <= 1 || arguments[1] === undefined ? DEFAULT_STATE_KEY : arguments[1];
-
   return function (state) {
-    return state[stateKey][actionType] ? state[stateKey][actionType].error : DEFAULT_ERROR_VALUE;
+    return state[STATE_KEY][actionType] ? state[STATE_KEY][actionType].error : DEFAULT_ERROR_VALUE;
   };
 }
 

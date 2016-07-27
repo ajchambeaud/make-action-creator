@@ -1,28 +1,11 @@
 /* global describe, it */
 
 import { expect } from 'chai';
-import reducer from '../src/reducer';
+import { reducer } from '../src/reducer';
 
 describe('the reducer', () => {
   it('should add a new key in state when START action was dispatched', () => {
     const prevState = {};
-    const action = {
-      type: 'MY_ACTION_START'
-    };
-
-    const newState = reducer(prevState, action);
-
-    expect(newState).to.deep.equal({
-      MY_ACTION: {
-        status: 'pending',
-        error: null
-      }
-    });
-  });
-
-  it('should add a new key in state when START action was dispatched', () => {
-    const prevState = {};
-
     const action = {
       type: 'MY_ACTION_START'
     };

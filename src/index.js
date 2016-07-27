@@ -1,6 +1,6 @@
 import { begin, end, pendingTask } from 'react-redux-spinner';
 
-const DEFAULT_STATE_KEY = 'async';
+const STATE_KEY = 'async';
 const DEFAULT_STATUS_VALUE = 'init';
 const DEFAULT_ERROR_VALUE = null;
 
@@ -31,22 +31,22 @@ const makeActionCreator = (typePrefix, options = {}) => {
     action[type] = `${typePrefix}_${type}`;
   });
 
-  action.getError = getErrorSelector(action.type, options.stateKey);
-  action.getStatus = getStatusSelector(action.type, options.stateKey);
+  action.getError = getErrorSelector(action.type);
+  action.getStatus = getStatusSelector(action.type);
   action.clearStatus = { type: 'CLEAR_STATUS', actionType: action.type };
 
   return action;
 };
 
-function getStatusSelector (actionType, stateKey = DEFAULT_STATE_KEY) {
-  return state => state[stateKey][actionType]
-    ? state[stateKey][actionType].status
+function getStatusSelector (actionType) {
+  return state => state[STATE_KEY][actionType]
+    ? state[STATE_KEY][actionType].status
     : DEFAULT_STATUS_VALUE;
 }
 
-function getErrorSelector (actionType, stateKey = DEFAULT_STATE_KEY) {
-  return state => state[stateKey][actionType]
-    ? state[stateKey][actionType].error
+function getErrorSelector (actionType) {
+  return state => state[STATE_KEY][actionType]
+    ? state[STATE_KEY][actionType].error
     : DEFAULT_ERROR_VALUE;
 }
 
