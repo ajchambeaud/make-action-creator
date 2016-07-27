@@ -144,5 +144,80 @@ describe('makeActionCreator', () => {
         another: 10
       });
     });
+
+    it('should accept options.stateKey to set a custom state key', () => {
+      const actionPrefixType = 'my_action';
+      const customStateKey = 'customStateKey';
+      const actionCreator = makeActionCreator(actionPrefixType, { stateKey: customStateKey });
+      const state = {
+        [customStateKey]: {
+          [actionCreator.type]: {
+            status: 'failure',
+            error: 'something failed'
+          }
+        }
+      };
+      expect(actionCreator.getStatus(state)).to.be.equal('failure');
+      expect(actionCreator.getError(state)).to.be.equal('something failed');
+    });
+
+    describe('getStatus method', () => {
+      it('should return the status value of the action in state', () => {
+        const actionPrefixType = 'my_action';
+        const actionCreator = makeActionCreator(actionPrefixType);
+        const state = {
+          async: {
+            [actionCreator.type]: {
+              status: 'success'
+            }
+          }
+        };
+        expect(actionCreator.getStatus(state)).to.be.equal('success');
+      });
+
+      it('should return a default status value if key not present', () => {
+        const actionPrefixType = 'my_action';
+        const actionCreator = makeActionCreator(actionPrefixType);
+        const state = {
+          async: {}
+        };
+        expect(actionCreator.getStatus(state)).to.be.equal('init');
+      });
+    });
+
+    describe('getError method', () => {
+      it('should return the error value of the action in state', () => {
+        const actionPrefixType = 'my_action';
+        const actionCreator = makeActionCreator(actionPrefixType);
+        const state = {
+          async: {
+            [actionCreator.type]: {
+              error: 'something failed'
+            }
+          }
+        };
+        expect(actionCreator.getError(state)).to.be.equal('something failed');
+      });
+
+      it('should return null if key not present', () => {
+        const actionPrefixType = 'my_action';
+        const actionCreator = makeActionCreator(actionPrefixType);
+        const state = {
+          async: {}
+        };
+        expect(actionCreator.getError(state)).to.be.equal(null);
+      });
+    });
+
+    describe('clearStatus property', () => {
+      it('should return an action object', () => {
+        const actionPrefixType = 'my_action';
+        const actionCreator = makeActionCreator(actionPrefixType);
+        expect(actionCreator.clearStatus).to.deep.equal({
+          type: 'CLEAR_STATUS',
+          actionType: actionCreator.type
+        });
+      });
+    });
   });
 });

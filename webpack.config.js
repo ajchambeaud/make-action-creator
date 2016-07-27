@@ -2,10 +2,13 @@ var path = require('path');
 
 module.exports = {
   context: path.resolve('src'),
-  entry: './index.js',
+  entry: {
+    index: './index.js',
+    reducer: './reducer.js'
+  },
   output: {
     path: path.resolve('dist'),
-    filename: 'index.js',
+    filename: '[name].js',
     libraryTarget: 'umd'
   },
 
