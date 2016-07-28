@@ -2,10 +2,13 @@ var path = require('path');
 
 module.exports = {
   context: path.resolve('test'),
-  entry: './index.js',
+  entry: {
+    index: './index.js',
+    reducer: './reducer.js'
+  },
   output: {
     path: path.resolve('dist'),
-    filename: 'test.js'
+    filename: '[name].js'
   },
 
   resolve: {
