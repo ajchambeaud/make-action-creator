@@ -8269,7 +8269,7 @@
 
 	    return _extends({}, state, _defineProperty({}, base, {
 	      status: sub === 'START' ? 'pending' : sub === 'SUCCESS' ? 'success' : 'failure',
-	      error: sub === 'FAILURE' ? action.payload.error.message : null
+	      error: sub === 'FAILURE' ? getErrorMessage(action.payload) : null
 	    }));
 	  }
 	  if (action.type === 'CLEAR_STATUS') {
@@ -8289,6 +8289,24 @@
 	    base: type.slice(0, type.lastIndexOf('_')),
 	    sub: type.slice(type.lastIndexOf('_') + 1)
 	  };
+	}
+
+	// Find the error message.
+	function getErrorMessage(payload) {
+
+	  if (typeof payload === 'string') {
+	    return payload;
+	  }
+
+	  if (typeof payload.error === 'string') {
+	    return payload.error;
+	  }
+
+	  if (payload.error && payload.error.message) {
+	    return payload.error.message;
+	  }
+
+	  return null;
 	}
 
 /***/ }

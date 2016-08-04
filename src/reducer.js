@@ -11,7 +11,7 @@ export const reducer = (state = {}, action) => {
       ...state,
       [base]: {
         status: sub === 'START' ? 'pending' : (sub === 'SUCCESS' ? 'success' : 'failure'),
-        error: sub === 'FAILURE' ? action.payload.error.message : null
+        error: sub === 'FAILURE' ? getErrorMessage(action.payload) : null
       }
     };
   }
@@ -35,4 +35,22 @@ function breakAction (type) {
     base: type.slice(0, type.lastIndexOf('_')),
     sub: type.slice(type.lastIndexOf('_') + 1)
   };
+}
+
+// Find the error message.
+function getErrorMessage (payload) {
+
+  if (typeof payload === 'string') {
+    return payload;
+  }
+
+  if (typeof payload.error === 'string') {
+    return payload.error;
+  }
+
+  if (payload.error && payload.error.message) {
+    return payload.error.message;
+  }
+
+  return null;
 }
