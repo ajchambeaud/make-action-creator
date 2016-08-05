@@ -4,7 +4,7 @@
   "description": "Make action creators enhanced for async control flow.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "webpack --config webpack.tests.config.js && mocha dist/*.js",
+    "test": "webpack --config webpack.tests.config.js && mocha test/dist/*.js",
     "build": "babel src --out-dir dist"
   },
   "keywords": [

@@ -7,7 +7,7 @@ module.exports = {
     reducer: './reducer.js'
   },
   output: {
-    path: path.resolve('dist'),
+    path: path.resolve('test/dist'),
     filename: '[name].js'
   },
 
