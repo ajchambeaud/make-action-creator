@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "webpack --config webpack.tests.config.js && mocha test/dist/*.js",
-    "build": "babel src --out-dir dist"
+    "build": "webpack"
   },
   "keywords": [
     "redux",
@@ -26,7 +26,6 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "^6.6.5",
     "babel-core": "^6.7.2",
     "babel-eslint": "^5.0.0",
     "babel-loader": "^6.2.4",
@@ -36,8 +35,6 @@
     "babel-preset-stage-2": "^6.5.0",
     "chai": "^3.5.0",
     "mocha": "^2.4.5",
-    "proxyquire": "^1.7.4",
-    "semistandard-loader": "0.0.3",
     "webpack": "^1.12.14"
   },
   "dependencies": {
