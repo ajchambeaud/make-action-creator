@@ -118,6 +118,101 @@
 	    });
 	  });
 
+	  it('should return null error when FAILURE action is dispatched and no paylod is present', function () {
+	    var prevState = {
+	      MY_ACTION: {
+	        status: 'pending',
+	        error: null
+	      }
+	    };
+
+	    var action = {
+	      type: 'MY_ACTION_FAILURE'
+	    };
+
+	    var newState = (0, _reducer.reducer)(prevState, action);
+
+	    (0, _chai.expect)(newState).to.deep.equal({
+	      MY_ACTION: {
+	        status: 'failure',
+	        error: null
+	      }
+	    });
+	  });
+
+	  it('should find the error message when payload is an object like {message: "error message"}', function () {
+	    var prevState = {
+	      MY_ACTION: {
+	        status: 'pending',
+	        error: null
+	      }
+	    };
+
+	    var action = {
+	      type: 'MY_ACTION_FAILURE',
+	      payload: {
+	        message: 'foo'
+	      }
+	    };
+
+	    var newState = (0, _reducer.reducer)(prevState, action);
+
+	    (0, _chai.expect)(newState).to.deep.equal({
+	      MY_ACTION: {
+	        status: 'failure',
+	        error: 'foo'
+	      }
+	    });
+	  });
+
+	  it('should find the error message when payload is an object like {error: "error message"}', function () {
+	    var prevState = {
+	      MY_ACTION: {
+	        status: 'pending',
+	        error: null
+	      }
+	    };
+
+	    var action = {
+	      type: 'MY_ACTION_FAILURE',
+	      payload: {
+	        error: 'foo'
+	      }
+	    };
+
+	    var newState = (0, _reducer.reducer)(prevState, action);
+
+	    (0, _chai.expect)(newState).to.deep.equal({
+	      MY_ACTION: {
+	        status: 'failure',
+	        error: 'foo'
+	      }
+	    });
+	  });
+
+	  it('should find the error message when payload is an string', function () {
+	    var prevState = {
+	      MY_ACTION: {
+	        status: 'pending',
+	        error: null
+	      }
+	    };
+
+	    var action = {
+	      type: 'MY_ACTION_FAILURE',
+	      payload: 'foo'
+	    };
+
+	    var newState = (0, _reducer.reducer)(prevState, action);
+
+	    (0, _chai.expect)(newState).to.deep.equal({
+	      MY_ACTION: {
+	        status: 'failure',
+	        error: 'foo'
+	      }
+	    });
+	  });
+
 	  it('should remove the action state key when CLEAR_STATUS action is dispatched', function () {
 	    var prevState = {
 	      MY_ACTION: {
@@ -8294,12 +8389,20 @@
 	// Find the error message.
 	function getErrorMessage(payload) {
 
+	  if (!payload) {
+	    return null;
+	  }
+
 	  if (typeof payload === 'string') {
 	    return payload;
 	  }
 
 	  if (typeof payload.error === 'string') {
 	    return payload.error;
+	  }
+
+	  if (typeof payload.message === 'string') {
+	    return payload.message;
 	  }
 
 	  if (payload.error && payload.error.message) {
