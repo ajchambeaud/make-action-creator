@@ -15,6 +15,7 @@ describe('the reducer', () => {
     expect(newState).to.deep.equal({
       MY_ACTION: {
         status: 'pending',
+        response: null,
         error: null
       }
     });
@@ -24,6 +25,7 @@ describe('the reducer', () => {
     const prevState = {
       MY_ACTION: {
         status: 'pending',
+        response: null,
         error: null
       }
     };
@@ -37,6 +39,32 @@ describe('the reducer', () => {
     expect(newState).to.deep.equal({
       MY_ACTION: {
         status: 'success',
+        response: undefined,
+        error: null
+      }
+    });
+  });
+
+  it('should update the response value when SUCCESS action was dispatched', () => {
+    const prevState = {
+      MY_ACTION: {
+        status: 'pending',
+        response: null,
+        error: null
+      }
+    };
+
+    const action = {
+      type: 'MY_ACTION_SUCCESS',
+      payload: 'test'
+    };
+
+    const newState = reducer(prevState, action);
+
+    expect(newState).to.deep.equal({
+      MY_ACTION: {
+        status: 'success',
+        response: 'test',
         error: null
       }
     });
@@ -46,12 +74,14 @@ describe('the reducer', () => {
     const prevState = {
       MY_ACTION: {
         status: 'pending',
+        response: null,
         error: null
       }
     };
 
     const action = {
       type: 'MY_ACTION_FAILURE',
+      response: null,
       payload: {
         error: {
           message: 'this failed'
@@ -64,15 +94,17 @@ describe('the reducer', () => {
     expect(newState).to.deep.equal({
       MY_ACTION: {
         status: 'failure',
+        response: null,
         error: 'this failed'
       }
     });
   });
 
-  it('should return null error when FAILURE action is dispatched and no paylod is present', () => {
+  it('should return null error when FAILURE action is dispatched and no payload is present', () => {
     const prevState = {
       MY_ACTION: {
         status: 'pending',
+        response: null,
         error: null
       }
     };
@@ -86,6 +118,7 @@ describe('the reducer', () => {
     expect(newState).to.deep.equal({
       MY_ACTION: {
         status: 'failure',
+        response: null,
         error: null
       }
     });
@@ -95,6 +128,7 @@ describe('the reducer', () => {
     const prevState = {
       MY_ACTION: {
         status: 'pending',
+        response: null,
         error: null
       }
     };
@@ -111,6 +145,7 @@ describe('the reducer', () => {
     expect(newState).to.deep.equal({
       MY_ACTION: {
         status: 'failure',
+        response: null,
         error: 'foo'
       }
     });
@@ -120,6 +155,7 @@ describe('the reducer', () => {
     const prevState = {
       MY_ACTION: {
         status: 'pending',
+        response: null,
         error: null
       }
     };
@@ -136,6 +172,7 @@ describe('the reducer', () => {
     expect(newState).to.deep.equal({
       MY_ACTION: {
         status: 'failure',
+        response: null,
         error: 'foo'
       }
     });
@@ -145,6 +182,7 @@ describe('the reducer', () => {
     const prevState = {
       MY_ACTION: {
         status: 'pending',
+        response: null,
         error: null
       }
     };
@@ -159,6 +197,7 @@ describe('the reducer', () => {
     expect(newState).to.deep.equal({
       MY_ACTION: {
         status: 'failure',
+        response: null,
         error: 'foo'
       }
     });
@@ -168,6 +207,7 @@ describe('the reducer', () => {
     const prevState = {
       MY_ACTION: {
         status: 'failure',
+        response: null,
         payload: {
           error: {
             message: 'this failed'
@@ -192,6 +232,7 @@ describe('the reducer', () => {
     const prevState = {
       MY_ACTION: {
         status: 'failure',
+        response: null,
         payload: {
           error: {
             message: 'this failed'
