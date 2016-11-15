@@ -15,18 +15,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
  * statuses and error messages easily.
  */
 var reducer = exports.reducer = function reducer() {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
   if (isAsync(action.type)) {
-    var _breakAction = breakAction(action.type);
-
-    var base = _breakAction.base;
-    var sub = _breakAction.sub;
+    var _breakAction = breakAction(action.type),
+        base = _breakAction.base,
+        sub = _breakAction.sub;
 
     return _extends({}, state, _defineProperty({}, base, {
       status: sub === 'START' ? 'pending' : sub === 'SUCCESS' ? 'success' : 'failure',
-      error: sub === 'FAILURE' ? getErrorMessage(action.payload) : null
+      error: sub === 'FAILURE' ? getErrorMessage(action.payload) : null,
+      response: sub === 'SUCCESS' ? action.payload : null
     }));
   }
   if (action.type === 'CLEAR_STATUS') {

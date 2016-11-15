@@ -11,7 +11,8 @@ export const reducer = (state = {}, action) => {
       ...state,
       [base]: {
         status: sub === 'START' ? 'pending' : (sub === 'SUCCESS' ? 'success' : 'failure'),
-        error: sub === 'FAILURE' ? getErrorMessage(action.payload) : null
+        error: sub === 'FAILURE' ? getErrorMessage(action.payload) : null,
+        response: sub === 'SUCCESS' ? action.payload : null
       }
     };
   }
