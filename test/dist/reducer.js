@@ -88,8 +88,41 @@
 	    (0, _chai.expect)(newState).to.deep.equal({
 	      MY_ACTION: {
 	        status: 'success',
-	        response: undefined,
+	        response: null,
 	        error: null
+	      }
+	    });
+	  });
+
+	  it('should update the response value when FAILURE action was dispatched', function () {
+	    var prevState = {
+	      MY_ACTION: {
+	        status: 'pending',
+	        response: null,
+	        error: null
+	      }
+	    };
+
+	    var action = {
+	      type: 'MY_ACTION_FAILURE',
+	      payload: {
+	        error: {
+	          message: 'this failed'
+	        }
+	      }
+	    };
+
+	    var newState = (0, _reducer.reducer)(prevState, action);
+
+	    (0, _chai.expect)(newState).to.deep.equal({
+	      MY_ACTION: {
+	        status: 'failure',
+	        response: {
+	          error: {
+	            message: 'this failed'
+	          }
+	        },
+	        error: 'this failed'
 	      }
 	    });
 	  });
@@ -143,7 +176,11 @@
 	    (0, _chai.expect)(newState).to.deep.equal({
 	      MY_ACTION: {
 	        status: 'failure',
-	        response: null,
+	        response: {
+	          error: {
+	            message: 'this failed'
+	          }
+	        },
 	        error: 'this failed'
 	      }
 	    });
@@ -194,7 +231,9 @@
 	    (0, _chai.expect)(newState).to.deep.equal({
 	      MY_ACTION: {
 	        status: 'failure',
-	        response: null,
+	        response: {
+	          message: 'foo'
+	        },
 	        error: 'foo'
 	      }
 	    });
@@ -221,13 +260,15 @@
 	    (0, _chai.expect)(newState).to.deep.equal({
 	      MY_ACTION: {
 	        status: 'failure',
-	        response: null,
+	        response: {
+	          error: 'foo'
+	        },
 	        error: 'foo'
 	      }
 	    });
 	  });
 
-	  it('should find the error message when payload is an string', function () {
+	  it('should find the error message when payload is a string', function () {
 	    var prevState = {
 	      MY_ACTION: {
 	        status: 'pending',
@@ -246,7 +287,7 @@
 	    (0, _chai.expect)(newState).to.deep.equal({
 	      MY_ACTION: {
 	        status: 'failure',
-	        response: null,
+	        response: 'foo',
 	        error: 'foo'
 	      }
 	    });
@@ -8640,7 +8681,7 @@
 	    return _extends({}, state, _defineProperty({}, base, {
 	      status: sub === 'START' ? 'pending' : sub === 'SUCCESS' ? 'success' : 'failure',
 	      error: sub === 'FAILURE' ? getErrorMessage(action.payload) : null,
-	      response: sub === 'SUCCESS' ? action.payload : null
+	      response: (sub === 'SUCCESS' || sub === 'FAILURE') && action.payload ? action.payload : null
 	    }));
 	  }
 	  if (action.type === 'CLEAR_STATUS') {

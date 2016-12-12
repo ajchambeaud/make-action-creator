@@ -39,8 +39,41 @@ describe('the reducer', () => {
     expect(newState).to.deep.equal({
       MY_ACTION: {
         status: 'success',
-        response: undefined,
+        response: null,
         error: null
+      }
+    });
+  });
+
+  it('should update the response value when FAILURE action was dispatched', () => {
+    const prevState = {
+      MY_ACTION: {
+        status: 'pending',
+        response: null,
+        error: null
+      }
+    };
+
+    const action = {
+      type: 'MY_ACTION_FAILURE',
+      payload: {
+        error: {
+          message: 'this failed'
+        }
+      }
+    };
+
+    const newState = reducer(prevState, action);
+
+    expect(newState).to.deep.equal({
+      MY_ACTION: {
+        status: 'failure',
+        response: {
+          error: {
+            message: 'this failed'
+          }
+        },
+        error: 'this failed'
       }
     });
   });
@@ -94,7 +127,11 @@ describe('the reducer', () => {
     expect(newState).to.deep.equal({
       MY_ACTION: {
         status: 'failure',
-        response: null,
+        response: {
+          error: {
+            message: 'this failed'
+          }
+        },
         error: 'this failed'
       }
     });
@@ -145,7 +182,9 @@ describe('the reducer', () => {
     expect(newState).to.deep.equal({
       MY_ACTION: {
         status: 'failure',
-        response: null,
+        response: {
+          message: 'foo'
+        },
         error: 'foo'
       }
     });
@@ -172,13 +211,15 @@ describe('the reducer', () => {
     expect(newState).to.deep.equal({
       MY_ACTION: {
         status: 'failure',
-        response: null,
+        response: {
+          error: 'foo'
+        },
         error: 'foo'
       }
     });
   });
 
-  it('should find the error message when payload is an string', () => {
+  it('should find the error message when payload is a string', () => {
     const prevState = {
       MY_ACTION: {
         status: 'pending',
@@ -197,7 +238,7 @@ describe('the reducer', () => {
     expect(newState).to.deep.equal({
       MY_ACTION: {
         status: 'failure',
-        response: null,
+        response: 'foo',
         error: 'foo'
       }
     });
