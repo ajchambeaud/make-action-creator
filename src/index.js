@@ -33,6 +33,7 @@ const makeActionCreator = (typePrefix, options = {}) => {
 
   action.getError = getErrorSelector(action.type);
   action.getStatus = getStatusSelector(action.type);
+  action.getResponse = getResponseSelector(action.type);
   action.clearStatus = { type: 'CLEAR_STATUS', actionType: action.type };
 
   return action;
@@ -48,6 +49,12 @@ function getErrorSelector (actionType) {
   return state => state[STATE_KEY][actionType]
     ? state[STATE_KEY][actionType].error
     : DEFAULT_ERROR_VALUE;
+}
+
+function getResponseSelector (actionType) {
+  return state => state[STATE_KEY][actionType]
+    ? state[STATE_KEY][actionType].response
+    : null;
 }
 
 export default makeActionCreator;
