@@ -40,10 +40,9 @@ function breakAction (type) {
 
 // Find the error message.
 function getErrorMessage (payload) {
-
   if (!payload) {
     return null;
-  }  
+  }
 
   if (typeof payload === 'string') {
     return payload;
