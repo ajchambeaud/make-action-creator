@@ -7,7 +7,7 @@
 
 ### Actions
 
-Actions are one of the most important part of a react/redux application. Also they're the most simple ones: plain objects acting like messages (signals) telling what's going on in your application.  
+Actions are one of the most important parts of a react/redux application. They're also one of the simplest: plain objects acting like messages (signals) telling what's going on in your application.  
 
 ```
 {
@@ -16,9 +16,9 @@ Actions are one of the most important part of a react/redux application. Also th
 }
 ```
 
-### Actions Creators
+### Action Creators
 
-So the action object is very simple, just need a unique identifier (the `type` field). By convencion, the type should be an uppercase string. You want to be sure that you dont misspell the action type when dispatch an action, and because of that, the redux documentation encourage you to make a function to return always the same action type: the action creator function.
+So the action object is very simple, it just needs a unique identifier (the `type` field). By convention, the type should be an uppercase string. You want to be sure that you don't misspell the action type when dispatching an action. The redux documentation encourages you to make a function, called the action creator, that always returns the same action type.
 
 ```
 const myAction = payload => ({
@@ -31,9 +31,11 @@ myAction('foo');
 
 ### Action Type Constant
 
-Now you have the action creator, but you need the action type in the reducer to generate the new state. So you'll need a constant to be sure you are using the same action type in the action creator an the reducer function.
+Now you have the action creator, but you also need the action type in the reducer to generate the new state. So you should use a constant to be sure you are using the same action type in both the action creator and the reducer function.
 
 ```
+export const MY_ACTION = 'MY_ACTION';
+
 function myReducer(state = initialState, action) {
   switch (action.type) {
     case MY_ACTION:
@@ -45,16 +47,16 @@ function myReducer(state = initialState, action) {
 ```
 ### Action Creator Creators
 
-This sounds like an Andre Staltz What The Flux joke (https://www.npmjs.com/package/wtflux) but actually make sense. In real world applications you have a lot of related actions in async operations (e.g. data fetch). You'll end up with a lot of costants imports (FETCH_CLIENTS , FETCH_CLIENTS_START, FETCH_CLIENTS_SUCCESS, FETCH_CLIENTS_FAILURE, etc), and of course, the corresponding action creators. This module is an Action Creator Creator (lol) that tries to keep the related actions and constants together in a single object.
+This sounds like an Andre Staltz [What The Flux](https://www.npmjs.com/package/wtflux) joke but it actually makes sense. In real world applications, you have a lot of related actions in async operations (e.g. data fetch). You'll end up with a lot of costants imported (FETCH_CLIENTS , FETCH_CLIENTS_START, FETCH_CLIENTS_SUCCESS, FETCH_CLIENTS_FAILURE, etc), and of course, the corresponding action creators. This module is an Action Creator Creator (lol) that tries to keep the related actions and constants together in a single object.
 
 ### My redux application goals
 
-There are many diferents ways to do a redux application. Regardless this module is just about the actions stuff, I use it in a redux application context with this assumptions:
+There are many diferents ways to do a redux application. Regardless this module is just about the actions. I use it in a redux application context with this assumptions:
 
-- Actions are simple signals
+- Actions are simple signals.
 - Reducer functions must express the state transformation, not the actionCreator.
 - Action creator must be as pure as the reducer.
-- Side efects in redux sagas.
+- Side effects are in redux sagas.
 
 ## Usage
 
@@ -68,7 +70,7 @@ import makeActionCreator from 'make-action-creator';
 export const showModalForm = makeActionCreator('show_modal_form');
 ```
 
-In your componant file
+In your component file
 
 ```
 import showModalForm from './actions';
@@ -108,7 +110,7 @@ import makeActionCreator from 'make-action-creator';
 export const deleteUser = makeActionCreator('delete_user');
 ```
 
-In your componant file
+In your component file
 
 ```
 import deleteUser from './actions';
@@ -141,7 +143,7 @@ function * deleteUserWorker (action) {
 }
 
 export function * deleteUserWatcher () {
-  yield takeEvery(deleteUser.type, deleteUserWorker); // whatch 'DELETE_USER'
+  yield takeEvery(deleteUser.type, deleteUserWorker); // watch 'DELETE_USER'
 }
 ```
 
@@ -164,7 +166,7 @@ function myReducer(state = initialState, action) {
 }
 ```
 
-### Integrate with react-redux-spinner
+### Integration with react-redux-spinner
 
 I kinda like this module: https://www.npmjs.com/package/react-redux-spinner.
 
@@ -176,7 +178,7 @@ const myAction = makeActionCreator('my_action', { rrSpinner: true });
 
 ### Add more data to the action object
 
-By default you just pass one paremeter to the action creator and that will be the action payload. If you want to add extra data:
+By default you just pass one paremeter to the action creator and that will be the action payload. If you want to add extra data, you may provide a second argument which must be an object.
 
 ```
 const myAction = makeActionCreator('my_action', { rrSpinner: true });
